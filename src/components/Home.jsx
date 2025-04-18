@@ -174,7 +174,7 @@ function Home() {
             setGenre(e.target.value);
           }}
         >
-          <option>Fantasy</option>
+          <option>Fantasy</option>  
           <option>Romance</option>
           <option>Science Fiction</option>
           <option>Mystery</option>
