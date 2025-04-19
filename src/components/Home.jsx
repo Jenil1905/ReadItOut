@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [books, setBooks] = useState([]);
@@ -7,6 +8,11 @@ function Home() {
   const [trendingBooks, setTrendingBooks] = useState([]);
   const [genre, setGenre] = useState("Fantasy");
   const [genreList, setGenreList] = useState([]);
+  const navigate = useNavigate()
+  //handle info
+  function handleClick(bookId) {
+    navigate(`/info/${bookId}`)
+  }
 
   // Add refs for scrolling containers
   const topRatedRef = useRef(null);
@@ -136,9 +142,11 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-
+            const bookId = book.id
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+                onClick={() => { handleClick(bookId) }}
+              >
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -237,9 +245,12 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
+              const bookId = book.id
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+              onClick={() => { handleClick(bookId) }}
+              >
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -338,9 +349,12 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-
+            const bookId = book.id
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+              onClick={() => { handleClick(bookId) }} 
+              >
+
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -458,9 +472,11 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-
+              const bookId = book.id
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+              onClick={() => { handleClick(bookId) }}
+              >
                 {thumbnail ? (
                   <img
                     src={thumbnail}
