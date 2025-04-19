@@ -9,6 +9,12 @@ function Home() {
   const [genre, setGenre] = useState("Fantasy");
   const [genreList, setGenreList] = useState([]);
   const navigate = useNavigate()
+  const [loading, setLoading] = useState({
+    trending: null,
+    topRated: null,
+    newReleases: null,
+    popularGenre: null
+  });
   //handle info
   function handleClick(bookId) {
     navigate(`/info/${bookId}`)
@@ -29,6 +35,7 @@ function Home() {
   };
 
   useEffect(() => {
+    setLoading(prev=>({...prev , topRated:true}))
     const randomPage = Math.floor(Math.random() * 5);
     const startIndex = randomPage * 20;
     axios
@@ -37,52 +44,78 @@ function Home() {
       )
       .then((response) => {
         setBooks(response.data.items);
+        setLoading(prev=>({...prev , topRated:false}))
       })
       .catch((error) => {
         console.error(error);
+        setLoading(prev=>({...prev , topRated:false}))
       });
   }, []);
   //   New Release Section
   useEffect(() => {
+    setLoading(prev=>({...prev , newReleases:true}))
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=new+releases&orderBy=newest&maxResults=20`
       )
       .then((response) => {
         setNewBooks(response.data.items);
+        setLoading(prev=>({...prev , newReleases:false}))
       })
       .catch((error) => {
         console.log(error);
+        setLoading(prev=>({...prev , newReleases:false}))
       });
   }, []);
 
   //Trending Books Section
   useEffect(() => {
+    setLoading(prev=>({...prev , trending:true}))
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20`
       )
       .then((response) => {
         setTrendingBooks(response.data.items);
+        setLoading(prev=>({...prev , trending:false}))
       })
       .catch((error) => {
         console.log(error);
+        setLoading(prev=>({...prev , trending:false}))
       });
   }, []);
 
   //Genre Based Filter
   useEffect(() => {
+    setLoading(prev=>({...prev , popularGenre:true}))
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=20`
       )
       .then((response) => {
         setGenreList(response.data.items);
+        setLoading(prev=>({...prev , popularGenre:false}))
       })
       .catch((error) => {
         console.log(error);
+        setLoading(prev=>({...prev , popularGenre:false}))
       });
   }, [genre]);
+
+  if (
+    loading.trending ||
+    loading.topRated ||
+    loading.newReleases ||
+    loading.popularGenre
+  ) {
+    return (
+      <div className="bg-black w-screen h-screen flex flex-col justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
+        <p className="text-gray-300 animate-pulse text-lg">Loading...</p>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="bg-black min-h-screen p-4">
