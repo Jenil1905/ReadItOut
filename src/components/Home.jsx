@@ -81,7 +81,7 @@ function Home() {
   return (
     <div className="bg-black min-h-screen p-4">
       {/* Additional Tailwind styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -138,13 +138,13 @@ function Home() {
               info.imageLinks?.thumbnail;
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
                 {thumbnail ? (
                   <img
                     src={thumbnail}
                     alt={info.title}
                     className="w-full h-[350px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                    style={{imageRendering: 'crisp-edges'}}
+                    style={{ imageRendering: "crisp-edges" }}
                   />
                 ) : (
                   <div className="w-full h-[350px] bg-gray-300 flex items-center justify-center rounded-lg">
@@ -153,6 +153,20 @@ function Home() {
                     </span>
                   </div>
                 )}
+
+                {/* ⭐ Rating Badge */}
+                <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
+                  {info.averageRating > 0 ? (
+                    <>
+                      <span className="text-yellow-400">⭐</span>{" "}
+                      {info.averageRating.toFixed(1)}
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No Rating</span>
+                  )}
+                </div>
+
+                {/* Book Title */}
                 <p className="mt-2 text-md font-semibold text-gray-800 text-center line-clamp-2">
                   {info.title}
                 </p>
@@ -225,13 +239,13 @@ function Home() {
               info.imageLinks?.thumbnail;
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
                 {thumbnail ? (
                   <img
                     src={thumbnail}
                     alt={info.title}
                     className="w-full h-[350px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                    style={{imageRendering : 'auto'}}
+                    style={{ imageRendering: "crisp-edges" }}
                   />
                 ) : (
                   <div className="w-full h-[350px] bg-gray-300 flex items-center justify-center rounded-lg">
@@ -240,6 +254,20 @@ function Home() {
                     </span>
                   </div>
                 )}
+
+                {/* ⭐ Rating Badge */}
+                <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
+                  {info.averageRating > 0 ? (
+                    <>
+                      <span className="text-yellow-400">⭐</span>{" "}
+                      {info.averageRating.toFixed(1)}
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No Rating</span>
+                  )}
+                </div>
+
+                {/* Book Title */}
                 <p className="mt-2 text-md font-semibold text-gray-800 text-center line-clamp-2">
                   {info.title}
                 </p>
@@ -312,13 +340,13 @@ function Home() {
               info.imageLinks?.thumbnail;
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
                 {thumbnail ? (
                   <img
                     src={thumbnail}
                     alt={info.title}
                     className="w-full h-[350px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                    style={{imageRendering: 'crisp-edges'}}
+                    style={{ imageRendering: "crisp-edges" }}
                   />
                 ) : (
                   <div className="w-full h-[350px] bg-gray-300 flex items-center justify-center rounded-lg">
@@ -327,6 +355,20 @@ function Home() {
                     </span>
                   </div>
                 )}
+
+                {/* ⭐ Rating Badge */}
+                <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
+                  {info.averageRating > 0 ? (
+                    <>
+                      <span className="text-yellow-400">⭐</span>{" "}
+                      {info.averageRating.toFixed(1)}
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No Rating</span>
+                  )}
+                </div>
+
+                {/* Book Title */}
                 <p className="mt-2 text-md font-semibold text-gray-800 text-center line-clamp-2">
                   {info.title}
                 </p>
@@ -418,13 +460,13 @@ function Home() {
               info.imageLinks?.thumbnail;
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative">
                 {thumbnail ? (
                   <img
                     src={thumbnail}
                     alt={info.title}
                     className="w-full h-[350px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                    style={{imageRendering: 'crisp-edges'}}
+                    style={{ imageRendering: "crisp-edges" }}
                   />
                 ) : (
                   <div className="w-full h-[350px] bg-gray-300 flex items-center justify-center rounded-lg">
@@ -433,6 +475,20 @@ function Home() {
                     </span>
                   </div>
                 )}
+
+                {/* ⭐ Rating Badge */}
+                <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
+                  {info.averageRating > 0 ? (
+                    <>
+                      <span className="text-yellow-400">⭐</span>{" "}
+                      {info.averageRating.toFixed(1)}
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No Rating</span>
+                  )}
+                </div>
+
+                {/* Book Title */}
                 <p className="mt-2 text-md font-semibold text-gray-800 text-center line-clamp-2">
                   {info.title}
                 </p>
