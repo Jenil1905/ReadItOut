@@ -136,7 +136,7 @@ function Info() {
             {volumeInfo.language && (
               <div className="bg-white p-4 rounded-lg shadow transition duration-300 hover:shadow-md">
                 <span className="block text-sm font-medium text-gray-500">Language</span>
-                <span className="block mt-1">{volumeInfo.language.toUpperCase()}</span>
+                <span className="block mt-1">{new Intl.DisplayNames(["en"] , {type: "language"}).of(volumeInfo.language.toUpperCase())}</span>
               </div>
             )}
             
