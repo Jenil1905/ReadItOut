@@ -1,12 +1,24 @@
-# React + Vite
+# 📚 ReadItOut
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**ReadItOut** is a modern book review and discovery platform built with React. It lets users explore trending books, top-rated picks, and genre-filtered suggestions — all powered by the Google Books API. Users can save books to their shelf (watchlist), read summaries, and sort their personal library by title or rating.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔍 **Search** books by keyword or title
+- 🌟 **Trending**, **Top Rated**, and **New Releases** sections
+- ❤️ **Add to Watchlist** / **My Shelf** (persistent using state)
+- 📖 **Detailed Book Info** page with summary, authors, and ratings
+- 📚 **Genre filtering**
+- 🔀 **Sort My Shelf** by title or rating
+- 🎨 Clean, animated UI with dark theme & responsive layout
 
-## Expanding the ESLint configuration
+## 🛠️ Built With
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** + **React Router DOM** for routing
+- **TailwindCSS** for fast styling
+- **Google Books API** for book data
+- **LocalStorage (optional)** for watchlist persistence
+- **Framer Motion** for animations (optional enhancement)
+
+
+
