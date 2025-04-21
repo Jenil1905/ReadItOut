@@ -2,13 +2,24 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Home({ handleWatchlist, handleRemoveFromWatchlist, watchlist }) {
   const [books, setBooks] = useState([]);
   const [newBooks, setNewBooks] = useState([]);
   const [trendingBooks, setTrendingBooks] = useState([]);
   const [genre, setGenre] = useState("Fantasy");
   const [genreList, setGenreList] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  function isInWatchlist(book) {
+    if (!book || !book.id) return false;
+    return watchlist.some((b) => b?.id === book.id);
+  }
+
+  function handleWatchlistClick(e, action) {
+    e.stopPropagation();
+    action();
+  }
+
   const [loading, setLoading] = useState({
     trending: null,
     topRated: null,
@@ -17,7 +28,7 @@ function Home() {
   });
   //handle info
   function handleClick(bookId) {
-    navigate(`/info/${bookId}`)
+    navigate(`/info/${bookId}`);
   }
 
   // Add refs for scrolling containers
@@ -35,7 +46,7 @@ function Home() {
   };
 
   useEffect(() => {
-    setLoading(prev=>({...prev , topRated:true}))
+    setLoading(prev => ({ ...prev, topRated: true }));
     const randomPage = Math.floor(Math.random() * 5);
     const startIndex = randomPage * 20;
     axios
@@ -44,61 +55,61 @@ function Home() {
       )
       .then((response) => {
         setBooks(response.data.items);
-        setLoading(prev=>({...prev , topRated:false}))
+        setLoading(prev => ({ ...prev, topRated: false }));
       })
       .catch((error) => {
         console.error(error);
-        setLoading(prev=>({...prev , topRated:false}))
+        setLoading(prev => ({ ...prev, topRated: false }));
       });
   }, []);
   //   New Release Section
   useEffect(() => {
-    setLoading(prev=>({...prev , newReleases:true}))
+    setLoading(prev => ({ ...prev, newReleases: true }));
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=new+releases&orderBy=newest&maxResults=20`
       )
       .then((response) => {
         setNewBooks(response.data.items);
-        setLoading(prev=>({...prev , newReleases:false}))
+        setLoading(prev => ({ ...prev, newReleases: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(prev=>({...prev , newReleases:false}))
+        setLoading(prev => ({ ...prev, newReleases: false }));
       });
   }, []);
 
   //Trending Books Section
   useEffect(() => {
-    setLoading(prev=>({...prev , trending:true}))
+    setLoading(prev => ({ ...prev, trending: true }));
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20`
       )
       .then((response) => {
         setTrendingBooks(response.data.items);
-        setLoading(prev=>({...prev , trending:false}))
+        setLoading(prev => ({ ...prev, trending: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(prev=>({...prev , trending:false}))
+        setLoading(prev => ({ ...prev, trending: false }));
       });
   }, []);
 
   //Genre Based Filter
   useEffect(() => {
-    setLoading(prev=>({...prev , popularGenre:true}))
+    setLoading(prev => ({ ...prev, popularGenre: true }));
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=20`
       )
       .then((response) => {
         setGenreList(response.data.items);
-        setLoading(prev=>({...prev , popularGenre:false}))
+        setLoading(prev => ({ ...prev, popularGenre: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(prev=>({...prev , popularGenre:false}))
+        setLoading(prev => ({ ...prev, popularGenre: false }));
       });
   }, [genre]);
 
@@ -115,6 +126,32 @@ function Home() {
       </div>
     );
   }
+
+  // Watchlist button component for reuse
+  const WatchlistButton = ({ book }) => {
+    if (!book) {
+      console.warn("Invalid book object in WatchlistButton:", book);
+      return null;
+    }
+  
+    return isInWatchlist(book) ? (
+      <div
+        className="absolute top-3 right-3 p-2 rounded-full bg-sky-900/80 hover:bg-sky-900 shadow-lg transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+        onClick={(e) => handleWatchlistClick(e, () => handleRemoveFromWatchlist(book))}
+      >
+        <span className="text-xl">❤️</span>
+      </div>
+    ) : (
+      <div
+        className="absolute top-3 right-3 p-2 rounded-full bg-sky-900/80 hover:bg-sky-900 shadow-lg transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+        onClick={(e) => handleWatchlistClick(e, () => handleWatchlist(book))}
+      >
+        <span className="text-xl">🤍</span>
+      </div>
+    );
+  };
+  
+  
   
 
   return (
@@ -175,9 +212,12 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-            const bookId = book.id
+            const bookId = book.id;
+            
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+              <div 
+                key={bookId}
+                className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
                 onClick={() => { handleClick(bookId) }}
               >
                 {thumbnail ? (
@@ -194,6 +234,9 @@ function Home() {
                     </span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <WatchlistButton book={book} />
 
                 {/* ⭐ Rating Badge */}
                 <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
@@ -278,11 +321,13 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-              const bookId = book.id
+            const bookId = book.id;
 
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
-              onClick={() => { handleClick(bookId) }}
+              <div 
+                key={bookId}
+                className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+                onClick={() => { handleClick(bookId) }}
               >
                 {thumbnail ? (
                   <img
@@ -298,6 +343,9 @@ function Home() {
                     </span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <WatchlistButton book={book} />
 
                 {/* ⭐ Rating Badge */}
                 <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
@@ -382,12 +430,14 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-            const bookId = book.id
+            const bookId = book.id;
+            
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
-              onClick={() => { handleClick(bookId) }} 
+              <div 
+                key={bookId}
+                className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+                onClick={() => { handleClick(bookId) }}
               >
-
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -402,6 +452,9 @@ function Home() {
                     </span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <WatchlistButton book={book} />
 
                 {/* ⭐ Rating Badge */}
                 <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
@@ -505,10 +558,13 @@ function Home() {
               info.imageLinks?.large ||
               info.imageLinks?.medium ||
               info.imageLinks?.thumbnail;
-              const bookId = book.id
+            const bookId = book.id;
+            
             return (
-              <div className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
-              onClick={() => { handleClick(bookId) }}
+              <div 
+                key={bookId}
+                className="min-w-[200px] md:min-w-[250px] bg-white rounded-xl shadow-md p-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group relative"
+                onClick={() => { handleClick(bookId) }}
               >
                 {thumbnail ? (
                   <img
@@ -524,6 +580,9 @@ function Home() {
                     </span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <WatchlistButton book={book} />
 
                 {/* ⭐ Rating Badge */}
                 <div className="absolute top-3 left-3 px-2 py-1 rounded-full bg-black/80 text-white text-sm font-medium shadow-md">
