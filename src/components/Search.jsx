@@ -14,7 +14,7 @@ function Search({ searchTerm }) {
     if (!searchTerm) return;
     
     setLoading(true);
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`)
       .then(res => res.json())
       .then(data => {
         setBooks(data.items || []);

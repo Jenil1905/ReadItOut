@@ -10,7 +10,7 @@ function Info() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://www.googleapis.com/books/v1/volumes/${id}`)
+      .get(`https://www.googleapis.com/books/v1/volumes/${id}?key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`)
       .then((response) => {
         setBookData(response.data);
         setLoading(false);

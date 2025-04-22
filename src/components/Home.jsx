@@ -51,7 +51,7 @@ function Home({ handleWatchlist, handleRemoveFromWatchlist, watchlist }) {
     const startIndex = randomPage * 20;
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20&startIndex=${startIndex}`
+        `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20&startIndex=${startIndex}&key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`
       )
       .then((response) => {
         setBooks(response.data.items);
@@ -67,7 +67,7 @@ function Home({ handleWatchlist, handleRemoveFromWatchlist, watchlist }) {
     setLoading(prev => ({ ...prev, newReleases: true }));
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=new+releases&orderBy=newest&maxResults=20`
+        `https://www.googleapis.com/books/v1/volumes?q=new+releases&orderBy=newest&maxResults=20&key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`
       )
       .then((response) => {
         setNewBooks(response.data.items);
@@ -84,7 +84,7 @@ function Home({ handleWatchlist, handleRemoveFromWatchlist, watchlist }) {
     setLoading(prev => ({ ...prev, trending: true }));
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20`
+        `https://www.googleapis.com/books/v1/volumes?q=bestseller&orderBy=relevance&maxResults=20&key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`
       )
       .then((response) => {
         setTrendingBooks(response.data.items);
@@ -101,7 +101,7 @@ function Home({ handleWatchlist, handleRemoveFromWatchlist, watchlist }) {
     setLoading(prev => ({ ...prev, popularGenre: true }));
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=20`
+        `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=20&key=AIzaSyCmD98jOzNaflw0STdwRoqO7yIUiA2KvTQ`
       )
       .then((response) => {
         setGenreList(response.data.items);
